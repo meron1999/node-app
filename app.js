@@ -49,6 +49,13 @@ var data = {
     'Ichiro':'060-666-666'
 };
 
+var data2 = {
+    'Taro':['taro@yamada','090-999-999','Tokyo'],
+    'Hanako':['hanako@flower','080-888-888','Yokohama'],
+    'Sachiko':['sachiko@happy','070-777-777','Nagoya'],
+    'Ichiro':['ichiro@baseball','060-666-666','USA']
+};
+
 // Indexページのレスポンスを生成する関数
 function response_index(request,response,url_parts){
             var msg ="これはIndexページです。";
@@ -56,6 +63,7 @@ function response_index(request,response,url_parts){
             title:"Index",
             content:msg,
             data:data,
+            filename:'data_item',
             });
             response.writeHead(200,{'Content-Type':'text/html'});
             response.write(content);
@@ -64,30 +72,13 @@ function response_index(request,response,url_parts){
 
 function response_other(request,response){
     var msg ="これはOtherページです。";
-    if (request.method=='POST'){
-        var body ='';
-        request.on('data',function(data){
-            body +=data;
-        });
-        request.on('end',function(){
-            var post =qs.parse(body);
-            msg +='あなたは、「'+post.msg+'」と送信しました。';
-            var content =ejs.render(other_page,{
-            title:"Other",
-            content:msg,
-            });
-        response.writeHead(200,{'Content-Type':'text/html'});
-        response.write(content);
-        response.end();
-        });
-    }else{ //GETアクセス時の処理
-        var msg ="ページがありません。"
-        var content =ejs.render(other_page,{
-        title:"Other",
+    var content =ejs.render(index_page,{
+        title:"Index",
         content:msg,
+        data:data2,
+        filename:'data_item',
         });
-        response.writeHead(200,{'Content-Type':'text/html'});
-        response.write(content);
-        response.end();
-    }
-}
+    response.writeHead(200,{'Content-Type':'text/html'});
+    response.write(content);
+    response.end();
+    };
