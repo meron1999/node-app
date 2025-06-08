@@ -42,15 +42,20 @@ function getFromClient(request, response) {
         }
 }
 
+var data = {
+    'Taro':'090-999-999',
+    'Hanako':'080-888-888',
+    'Sachiko':'070-777-777',
+    'Ichiro':'060-666-666'
+};
+
+// Indexページのレスポンスを生成する関数
 function response_index(request,response,url_parts){
-    var content ="これはIndexページです。";
-            var query =url_parts.query;
-            if(query.msg !=undefined){
-                content +='あなたは、「'+query.msg+'」と送信しました。';
-            }
+            var msg ="これはIndexページです。";
             var content =ejs.render(index_page,{
             title:"Index",
-            content:content,
+            content:msg,
+            data:data,
             });
             response.writeHead(200,{'Content-Type':'text/html'});
             response.write(content);
