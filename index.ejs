@@ -11,10 +11,22 @@
 </header>
 <div role="main">
     <p><%=content %></p>
-    <% var id =0; %>
-    <% for (var key in data) { %>
-    <%- include('data_item', {id:++id, key:key, val:[data[key]]}) %>
-    <% } %>
+    <table class="table">
+        <tr>
+            <th>伝言です</th>
+        </tr>
+        <tr>
+            <td><%=data.msg %></td>
+        </tr>
+    </table>
+    <p>your last message :<%= cookie_data %></p>
+    <form method="post" action="/">
+        <div class="form-group>
+            <label for="msg">MESSAGE</label>
+            <input type="text" class="form-control" id="msg" name="msg" placeholder="メッセージ">
+        </div>
+    <input type="submit" class="btn btn-primary" value="送信">
+    </form>
     <p><a href="/other">他ページへ移動 &gt;&gt;</a></p>
 </div>
 </body>
